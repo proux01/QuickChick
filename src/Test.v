@@ -136,7 +136,7 @@ Definition doneTesting (st : State) : Result :=
               if (stDoAnalysis st) 
                 then ("""result"": ""success"", ""tests"": " ++ (show (numSuccessTests st)) ++ ", ""discards"": " ++ (show (numDiscardedTests st)))
                 else ("+++ Passed " ++ (show (numSuccessTests st)) ++ " tests (" ++ (show (numDiscardedTests st)) ++ " discards)" ++ newline)
-            )
+            )%string
 
   else
     NoExpectedFailure (numSuccessTests st) (summary st)
@@ -144,7 +144,7 @@ Definition doneTesting (st : State) : Result :=
                     if (stDoAnalysis st) 
                       then ("""result"": ""expected_failure"", ""tests"": " ++ (show (numSuccessTests st)))
                       else ("*** Failed! Passed " ++ (show (numSuccessTests st))++ " tests (expected Failure)" ++ newline)
-                  ).
+                  )%string.
   (* TODO: success st - labels *)
 
 Definition giveUp (st : State) : Result :=
@@ -154,7 +154,7 @@ Definition giveUp (st : State) : Result :=
               then ("""result"": ""gave_up"", ""tests"":" ++ (show (numSuccessTests st)) ++ ", ""discards"": " ++ (show (numDiscardedTests st)))
               else ("*** Gave up! Passed only " ++ (show (numSuccessTests st)) ++ " tests" ++ 
                     newline ++ "Discarded: " ++ (show (numDiscardedTests st)) ++ newline)
-          ).
+          )%string.
 Definition callbackPostTest (st : State) (res : Checker.Result) : nat :=
   match res with
   | MkResult o e r i s c t =>
